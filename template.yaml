@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  pdf-generator-lambda
+
+  Generates a PDF with a given template and from given data
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 300
+    MemorySize: 512
+  Api:
+    BinaryMediaTypes:
+    - application~1pdf
+    - application~1octet-stream
+    - font~1eot
+    - font~1opentype
+    - font~1otf
+    - image~1jpeg
+    - image~1png
+    - image~1svg+xml
+
+Resources:
+  GeneratePdfFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: pdf-renderer/
+      Handler: renderer.render
+      Runtime: nodejs12.x
+      Events:
+        Generate:
+          Type: Api
+          Properties:
+            Path: /renderPdf
+            Method: post
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  GeneratePdfApi:
+    Description: "API Gateway endpoint URL for Prod stage for GeneratePdf Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/renderPdf"
