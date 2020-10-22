@@ -28,6 +28,8 @@ Resources:
       CodeUri: pdf-renderer/
       Handler: renderer.render
       Runtime: nodejs12.x
+      Layers:
+        - arn:aws:lambda:eu-central-1:764866452798:layer:chrome-aws-lambda:19
       Events:
         Generate:
           Type: Api

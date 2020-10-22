@@ -1,0 +1,11 @@
+{
+  "invoiceNumber": "666",
+  "dateCreated": "22. Oktober 2020",
+  "dueDate": "21. November 2020",
+  "billTo": {
+    "name": "Feldschlösschen Getränke AG",
+    "street": "Theophil-Roniger-Strasse",
+    "zip": "4310",
+    "city": "Rheinfelden"
+  }
+}

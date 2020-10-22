@@ -1,8 +1,6 @@
 'use strict'
 
 const chromium = require('chrome-aws-lambda');
-const fs = require('fs');
-const path = require('path');
 const Mustache = require('mustache');
 
 let response;
@@ -14,7 +12,7 @@ module.exports.render = async (event, context) => {
         const templateData = body.data;
 
         const renderedTemplateHtml = Mustache.render(template, templateData);
-        const fileName = `pdf.pdf`;
+        const fileName = body.desiredFilename || `pdf.pdf`;
 
         let browser = null;
         try {
@@ -22,9 +20,7 @@ module.exports.render = async (event, context) => {
                 args: chromium.args,
                 defaultViewport: chromium.defaultViewport,
                 executablePath: await chromium.executablePath,
-                headless: chromium.headless,
-                dumpio: false,
-                ignoreHTTPSErrors: true,
+                headless: chromium.headless
             });
 
             const page = await browser.newPage();
@@ -36,18 +32,12 @@ module.exports.render = async (event, context) => {
             const pdf = await page.pdf({
                 format: 'A4',
                 printBackground: true,
-                margin: {
-                    top: '1cm',
-                    right: '1cm',
-                    bottom: '1cm',
-                    left: '1cm'
-                }
             });
 
             response = {
                 headers: {
                     'Content-Type': 'application/pdf',
-                    // 'content-disposition': `attachment; filename=${fileName}`,
+                    'content-disposition': `attachment; filename=${fileName}`,
                     'Content-Length': Buffer.byteLength(pdf, 'utf-8')
                 },
                 statusCode: 200,
