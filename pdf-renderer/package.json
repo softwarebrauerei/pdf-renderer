@@ -14,8 +14,9 @@
   "author": "Silas Knobel",
   "license": "ISC",
   "dependencies": {
-    "chrome-aws-lambda": "^5.3.1",
-    "mustache": "^4.0.1",
-    "puppeteer-core": "^5.3.1"
+    "mustache": "^4.0.1"
+  },
+  "devDependencies": {
+    "chrome-aws-lambda": "^5.3.1"
   }
 }
