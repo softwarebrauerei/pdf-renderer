@@ -9,7 +9,7 @@ Description: >
 Globals:
   Function:
     Timeout: 300
-    MemorySize: 1024
+    MemorySize: 1536
   Api:
     BinaryMediaTypes:
     - application~1pdf
@@ -30,7 +30,8 @@ Resources:
       Runtime: nodejs12.x
       Layers:
         #- !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:12"
-        - arn:aws:lambda:eu-central-1:764866452798:layer:chrome-aws-lambda:19
+        #- arn:aws:lambda:eu-central-1:764866452798:layer:chrome-aws-lambda:19
+        - arn:aws:lambda:eu-central-1:764866452798:layer:chrome-aws-lambda:24
       Tracing: Active
       Policies:
         - CloudWatchLambdaInsightsExecutionRolePolicy
