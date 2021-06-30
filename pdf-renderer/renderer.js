@@ -26,8 +26,8 @@ module.exports.render = async (event, context) => {
             const page = await browser.newPage();
             await page.setContent(renderedTemplateHtml, {
                 waitUntil: ['networkidle0','load','domcontentloaded'],
-                timeout: 30000
-            })
+                timeout: 20000
+            });
 
             const pdf = await page.pdf({
                 format: 'A4',
